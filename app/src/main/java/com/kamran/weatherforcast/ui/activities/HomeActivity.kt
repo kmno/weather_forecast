@@ -1,13 +1,8 @@
 package com.kamran.weatherforcast.ui.activities
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -19,10 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kamran.weatherforcast.R
 import com.kamran.weatherforcast.data.api.State
-import com.kamran.weatherforcast.data.model.Current
-import com.kamran.weatherforcast.data.model.Daily
-import com.kamran.weatherforcast.data.model.Forecast
-import com.kamran.weatherforcast.data.model.Weather
+import com.kamran.weatherforcast.data.model.*
 import com.kamran.weatherforcast.ui.viewmodels.HomeActivityViewModel
 import com.kamran.weatherforcast.utils.Alerts
 import com.kamran.weatherforcast.utils.DateHelper
@@ -31,7 +23,6 @@ import com.link184.kidadapter.simple.SingleKidAdapter
 import com.muddassir.connection_checker.ConnectionChecker
 import com.muddassir.connection_checker.ConnectionState
 import com.muddassir.connection_checker.ConnectivityListener
-import com.skydoves.powerspinner.IconSpinnerItem
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.days
@@ -190,7 +181,7 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
 
     private fun setCurrentWeatherData(data: Forecast) {
         city_text.text = data.timezone
-        current_temp.text = getString(R.string.temp, data.current.temp.toFloat().roundToInt())
+        current_temp.text = getString(R.string.temp, setTemps(data.current.temp))
         weather_icon.setImageDrawable(setWeatherIcons(data.current.weather))
     }
 
@@ -207,7 +198,7 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
             withLayoutResId(R.layout.hourly_recyclerview_list_item)
             withItems(hours)
             bindIndexed { hour, _ ->
-                hourly_temp.text = getString(R.string.temp, hour.temp.toFloat().roundToInt())
+                hourly_temp.text = getString(R.string.temp, setTemps(hour.temp))
                 hourly_time.text = DateHelper.convertLongToTime(hour.dt.toLong())
                     .toLowerCase(Locale.getDefault())
                 try {
@@ -231,8 +222,8 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
                     (today + (position + 1).days).dayOfWeek.toString()
                 day_temp.text = getString(
                     R.string.temp_max_min,
-                    day.temp.max.toFloat().roundToInt(),
-                    day.temp.min.toFloat().roundToInt()
+                    setTemps(day.temp.max),
+                    setTemps(day.temp.min)
                 )
                 try {
                     day_weather_icon.setImageDrawable(setWeatherIcons(day.weather))
@@ -277,6 +268,10 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
                 applicationContext?.packageName
             )
         )
+    }
+
+    private fun setTemps(temp: String): Int {
+        return temp.toFloat().roundToInt()
     }
 
 }
