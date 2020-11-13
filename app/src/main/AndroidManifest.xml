@@ -16,7 +16,7 @@
         android:theme="@style/Theme.WeatherForcast.Launcher">
         <!--android:theme="@style/Theme.WeatherForcast"-->
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.HomeActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustResize">

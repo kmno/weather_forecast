@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:background="@drawable/evening_bg"
-    tools:context=".ui.activities.MainActivity">
+    tools:context=".ui.activities.HomeActivity">
 
     <com.agrawalsuneet.dotsloader.loaders.LinearDotsLoader
         android:id="@+id/loading_bar"

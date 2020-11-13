@@ -97,6 +97,7 @@ dependencies {
 
     implementation"com.soywiz.korlibs.klock:klock-android:1.10.3"
     implementation "com.github.skydoves:powerspinner:1.1.5"
+    implementation 'com.github.muddassir235:connection_checker:1.5'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

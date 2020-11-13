@@ -7,12 +7,12 @@
 
 package com.kamran.weatherforcast.utils
 
+import androidx.appcompat.app.AppCompatActivity
 import com.irozon.alertview.AlertActionStyle
 import com.irozon.alertview.AlertStyle
 import com.irozon.alertview.AlertView
 import com.irozon.alertview.objects.AlertAction
 import com.kamran.weatherforcast.core.App
-import com.kamran.weatherforcast.ui.base.BaseActivity
 
 /**
  * Created by Kamran Noorinejad on 5/27/2020 AD 11:26.
@@ -20,11 +20,7 @@ import com.kamran.weatherforcast.ui.base.BaseActivity
  */
 object Alerts {
 
-    var alert: AlertView? = null/*
-    private var flashbar: Flashbar? = null
-    private var flashbarConfig: Flashbar.Builder? = null
-    private var flashbarProgress: Flashbar? = null
-    private var flashbarProgressConfig: Flashbar.Builder? = null*/
+    var alert: AlertView? = null
 
     private const val default_message = "Are You Sure?"
     private const val default_positive_button_text = "Yes"
@@ -33,7 +29,7 @@ object Alerts {
     fun showAlertDialogWithDefaultButton(
         title: String, msg: String = default_message,
         action: String = default_positive_button_text,
-        activity: BaseActivity
+        activity: AppCompatActivity
     ) {
         alert = AlertView(title, msg, AlertStyle.DIALOG)
         alert?.addAction(AlertAction(action, AlertActionStyle.DEFAULT) {
