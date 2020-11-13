@@ -5,7 +5,7 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.utils
+package com.kamran.weatherforcast.utils
 
 import java.text.SimpleDateFormat
 import java.util.*
@@ -18,7 +18,8 @@ class DateHelper {
     companion object {
         fun convertLongToTime(time: Long): String {
             val date = Date(time)
-            val format = SimpleDateFormat("yyyy.MM.dd HH:mm")
+            val format = SimpleDateFormat("ha")
+            //format.timeZone = TimeZone.getTimeZone("UTC")
             return format.format(date)
         }
 

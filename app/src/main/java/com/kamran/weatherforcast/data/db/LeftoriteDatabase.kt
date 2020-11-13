@@ -5,16 +5,15 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.data.db
+package com.kamran.weatherforcast.data.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.kmno.leftorite.core.Constants.dbName
-import com.kmno.leftorite.data.db.dao.CategoryDao
-import com.kmno.leftorite.data.db.dao.ItemDao
-import com.kmno.leftorite.data.model.Category
+import com.kamran.weatherforcast.core.Constants.dbName
+import com.kamran.weatherforcast.data.db.dao.CategoryDao
+import com.kamran.weatherforcast.data.model.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -27,7 +26,6 @@ import kotlinx.coroutines.launch
 abstract class LeftoriteDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao
-    abstract fun itemDao(): ItemDao
 
     companion object {
 

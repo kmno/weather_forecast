@@ -5,7 +5,7 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.utils.extensions
+package com.kamran.weatherforcast.utils.extensions
 
 /**
  * Created by Kamran Noorinejad on 9/23/2020 AD 15:27.

@@ -4,15 +4,14 @@
  * Copyright: All rights reserved Ⓒ 2020
  * http://www.itskamran.ir/
  */
-
-package com.kmno.leftorite.data.db.dao
+package com.kamran.weatherforcast.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.kmno.leftorite.core.Constants.dbName
-import com.kmno.leftorite.data.model.Category
+import com.kamran.weatherforcast.core.Constants.dbName
+import com.kamran.weatherforcast.data.model.Category
 import kotlinx.coroutines.flow.Flow
 
 /**

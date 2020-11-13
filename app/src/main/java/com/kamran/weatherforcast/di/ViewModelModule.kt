@@ -4,10 +4,9 @@
  * Copyright: All rights reserved Ⓒ 2020
  * http://www.itskamran.ir/
  */
+package com.kamran.weatherforcast.di
 
-package com.kmno.leftorite.di
-
-import com.kmno.leftorite.ui.viewmodels.*
+import com.kamran.weatherforcast.ui.viewmodels.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -17,10 +16,6 @@ import org.koin.dsl.module
  * Edited by Kamran Noorinejad on 5/19/2020 AD 13:12.
  */
 val viewModelModule = module {
-    viewModel { SplashActivityViewModel(androidContext(), get()) }
-    viewModel { SettingActivityViewModel(androidContext()) }
-    viewModel { AuthActivityViewModel(androidContext(), get()) }
-    viewModel { HomeActivityViewModel(androidContext(), get(), get()) }
-    viewModel { ProfileActivityViewModel(androidContext(), get(), get()) }
-    viewModel { CategoryViewModel(androidContext(), get()) }
+    //viewModel { SplashActivityViewModel(androidContext(), get()) }
+    viewModel { HomeActivityViewModel(androidContext(), get()/*, get()*/) }
 }

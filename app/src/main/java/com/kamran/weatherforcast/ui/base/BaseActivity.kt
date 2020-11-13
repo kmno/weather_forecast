@@ -4,8 +4,7 @@
  * Copyright: All rights reserved Ⓒ 2020
  * http://www.itskamran.ir/
  */
-
-package com.kmno.leftorite.ui.base
+package com.kamran.weatherforcast.ui.base
 
 import android.Manifest
 import android.content.BroadcastReceiver
@@ -22,14 +21,9 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.eazypermissions.common.model.PermissionResult
 import com.eazypermissions.dsl.extension.requestPermissions
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
-import com.kmno.leftorite.R
-import com.kmno.leftorite.core.App
-import com.kmno.leftorite.utils.Alerts
-import com.kmno.leftorite.utils.Alerts.dismissFlashbar
-import com.kmno.leftorite.utils.Alerts.showFlashbar
-
+import com.kamran.weatherforcast.R
+import com.kamran.weatherforcast.data.api.Resource.Companion.error
+import com.kamran.weatherforcast.utils.Alerts
 
 abstract class BaseActivity : AppCompatActivity() {
 
@@ -67,7 +61,7 @@ abstract class BaseActivity : AppCompatActivity() {
             resultCallback = {
                 when (this) {
                     is PermissionResult.PermissionGranted -> {
-                        App.logger.error("Add your logic here after user grants permission(s)")
+                        //  App.logger.error("Add your logic here after user grants permission(s)")
                     }
                     is PermissionResult.PermissionDenied -> {
                         // showAlert("Sorry!", "We Need this Permission ...","OK")
@@ -114,12 +108,7 @@ abstract class BaseActivity : AppCompatActivity() {
     abstract fun destroy()
 
     fun handleNetworkErrors(errorMessage: String, retryFunctionRef: () -> Unit = {}) {
-        Alerts.showBottomSheetErrorWithActionButton(
-            msg = errorMessage,
-            actionPositiveTitle = getString(R.string.error_dialog_try_again_button_text),
-            actionPositiveCallback = retryFunctionRef,
-            activity = this
-        )
+
     }
 
     abstract fun networkStatus(state: Boolean)
@@ -148,7 +137,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         unregisterReceiver(broadcastReceiver)
-        dismissFlashbar()
+        //dismissFlashbar()
     }
 
     override fun onBackPressed() {
@@ -158,15 +147,15 @@ abstract class BaseActivity : AppCompatActivity() {
     fun onNetConnected() {
         isNetworkAvailable = true
         networkStatus(true)
-        App.logger.error("onNetConnected")
-        dismissFlashbar()
+        // App.logger.error("onNetConnected")
+        //  dismissFlashbar()
     }
 
     fun onNetDisConnected() {
         isNetworkAvailable = false
         networkStatus(false)
-        App.logger.error("onNetDisConnected")
-        showFlashbar(R.color.error, R.string.no_network, R.string.no_network_desc, 0, this)
+        // App.logger.error("onNetDisConnected")
+        //  showFlashbar(R.color.error, R.string.no_network, R.string.no_network_desc, 0, this)
     }
 
     fun setUpScreen() {
@@ -208,7 +197,7 @@ abstract class BaseActivity : AppCompatActivity() {
      * the Google Play Store or enable it in the device's system settings.
      */
     private fun checkPlayServices(): Boolean {
-        val apiAvailability = GoogleApiAvailability.getInstance()
+        /*val apiAvailability = GoogleApiAvailability.getInstance()
         val resultCode = apiAvailability.isGooglePlayServicesAvailable(this)
         if (resultCode != ConnectionResult.SUCCESS) {
             if (apiAvailability.isUserResolvableError(resultCode)) {
@@ -221,7 +210,7 @@ abstract class BaseActivity : AppCompatActivity() {
                 finish()
             }
             return false
-        }
+        }*/
         return true
     }
 }

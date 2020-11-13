@@ -12,7 +12,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.kmno.leftorite.core.Constants
+import com.kamran.weatherforcast.core.Constants
 
 /**
  * Created by Kamran Noorinejad on 6/2/2020 AD 09:33.

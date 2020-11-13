@@ -5,7 +5,7 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.utils
+package com.kamran.weatherforcast.utils
 
 import com.chibatching.kotpref.KotprefModel
 

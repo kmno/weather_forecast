@@ -4,58 +4,12 @@
  * Copyright: All rights reserved Ⓒ 2020
  * http://www.itskamran.ir/
  */
+package com.kamran.weatherforcast.ui.activities
 
-package com.kmno.leftorite.ui.activities
-
-import android.animation.Animator
-import android.annotation.SuppressLint
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import cn.vove7.bottomdialog.BottomDialog
-import cn.vove7.bottomdialog.StatusCallback
-import cn.vove7.bottomdialog.toolbar
-import coil.Coil.imageLoader
-import coil.api.load
-import coil.request.LoadRequest
-import coil.size.ViewSizeResolver
-import coil.transform.CircleCropTransformation
-import com.elconfidencial.bubbleshowcase.BubbleShowCaseSequence
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
-import com.kmno.leftorite.R
-import com.kmno.leftorite.core.App
-import com.kmno.leftorite.core.Constants
-import com.kmno.leftorite.data.api.State
-import com.kmno.leftorite.data.model.Category
-import com.kmno.leftorite.data.model.Pair
-import com.kmno.leftorite.ui.base.BaseActivity
-import com.kmno.leftorite.ui.builders.CategoriesViewBuilder
-import com.kmno.leftorite.ui.builders.ItemDetailsViewBuilder
-import com.kmno.leftorite.ui.listeners.OnSwipeTouchListener
-import com.kmno.leftorite.ui.viewmodels.CategoryViewModel
-import com.kmno.leftorite.ui.viewmodels.HomeActivityViewModel
-import com.kmno.leftorite.utils.*
-import com.kmno.leftorite.utils.extensions.commaString
-import com.link184.kidadapter.setUp
-import com.link184.kidadapter.simple.SingleKidAdapter
-import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.activity_home_content.*
-import kotlinx.android.synthetic.main.activity_home_loading.*
-import kotlinx.android.synthetic.main.category_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.item_detail_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.recycleriew_list_item_splitted_view.*
-import kotlinx.android.synthetic.main.recycleriew_list_item_splitted_view.view.*
-import kotlinx.android.synthetic.main.recyclerview_list_category.view.*
-import org.koin.android.viewmodel.ext.android.viewModel
-import xyz.hanks.library.bang.SmallBangView
 
 @Suppress("UNCHECKED_CAST")
-class HomeActivity : BaseActivity() {
-
+class HomeActivity {
+/*
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
     private val categoryViewModel: CategoryViewModel by viewModel()
 
@@ -263,7 +217,7 @@ class HomeActivity : BaseActivity() {
                     goToProfilePage()
                 }
             }
-            /*oneButton(
+            *//*oneButton(
                 getString(R.string.select_all_categories),
                 bgColorId = R.color.colorPrimaryDark,
                 textColorId = R.color.white,
@@ -282,7 +236,7 @@ class HomeActivity : BaseActivity() {
                         allItemsOffset = 0
                         getAllItems()
                     }
-                })*/
+                })*//*
             theme(R.style.BottomDialog_Dark)
             content(CategoriesViewBuilder())
         }
@@ -316,7 +270,7 @@ class HomeActivity : BaseActivity() {
 
     //api calls
     //items
-    /*private fun getAllItems() {
+    *//*private fun getAllItems() {
         homeActivityViewModel.getAllItems(allItemsOffset).observe(this, Observer { networkResource ->
             when (networkResource.state) {
                 State.LOADING -> {
@@ -348,7 +302,7 @@ class HomeActivity : BaseActivity() {
                 }
             }
         })
-    }*/
+    }*//*
 
     private fun getItemsByCategory(_category: Category) {
         if (this::categoriesAdapter.isInitialized) categoriesAdapter.notifyDataSetChanged()
@@ -816,5 +770,5 @@ class HomeActivity : BaseActivity() {
                     return@OnCompleteListener
                 }
             })
-    }
+    }*/
 }

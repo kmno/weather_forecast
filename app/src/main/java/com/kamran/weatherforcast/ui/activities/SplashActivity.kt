@@ -5,26 +5,18 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.ui.activities
+package com.kamran.weatherforcast.ui.activities
 
 import android.content.Intent
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.Observer
-import com.bpm.store.authencation.auth
-import com.kmno.leftorite.R
-import com.kmno.leftorite.data.api.State
-import com.kmno.leftorite.ui.base.BaseActivity
-import com.kmno.leftorite.ui.viewmodels.SplashActivityViewModel
-import com.kmno.leftorite.utils.Alerts
-import com.kmno.leftorite.utils.ConfigPref
-import com.kmno.leftorite.utils.launchActivity
-import kotlinx.android.synthetic.main.activity_splash.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-class SplashActivity : BaseActivity() {
+class SplashActivity {
 
+/*
     private val splashActivityViewModel: SplashActivityViewModel by viewModel()
 
     override fun getResId(): Int {
@@ -134,6 +126,6 @@ class SplashActivity : BaseActivity() {
         if (state) {
             callInitialConfigApi()
         }
-    }
+    }*/
 
 }

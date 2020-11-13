@@ -5,9 +5,9 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.di
+package com.kamran.weatherforcast.di
 
-import com.kmno.leftorite.data.api.ApiClientProvider
+import com.kamran.weatherforcast.data.api.ApiClientProvider
 import org.koin.dsl.module
 
 /**

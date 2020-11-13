@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="224dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hourly_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginBottom="350dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/loading_bar"
+        app:layout_constraintTop_toBottomOf="@+id/weather_icon"
+        app:layout_constraintVertical_bias="0.52" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/daily_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hourly_recyclerview" />
+
+    <TextView
+        android:id="@+id/city"
+        android:layout_width="143dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/loading_bar"
+        app:layout_constraintEnd_toStartOf="@+id/weather_icon"
+        app:layout_constraintHorizontal_bias="0.419"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/current_temp" />
+
+    <TextView
+        android:id="@+id/current_temp"
+        android:layout_width="181dp"
+        android:layout_height="101dp"
+        android:layout_marginTop="104dp"
+        android:gravity="center_vertical"
+        android:text="0°"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="90sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/weather_icon"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/city"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

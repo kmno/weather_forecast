@@ -5,7 +5,7 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.utils.extensions
+package com.kamran.weatherforcast.utils.extensions
 
 import java.util.regex.Pattern
 

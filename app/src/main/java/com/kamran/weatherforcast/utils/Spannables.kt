@@ -5,7 +5,7 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.utils
+package com.kamran.weatherforcast.utils
 
 import android.graphics.Typeface.BOLD
 import android.graphics.Typeface.ITALIC

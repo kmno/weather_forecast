@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Weather Forcast</string>
+    <string name="network_error_text">Network Error</string>
 </resources>

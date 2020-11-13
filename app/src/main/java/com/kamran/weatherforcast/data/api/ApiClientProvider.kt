@@ -5,13 +5,15 @@
  * http://www.itskamran.ir/
  */
 
-package com.kmno.leftorite.data.api
+package com.kamran.weatherforcast.data.api
 
+import android.util.Log
 import com.google.gson.GsonBuilder
-import com.kmno.leftorite.core.App
-import com.kmno.leftorite.core.Constants
+import com.kamran.weatherforcast.core.App
+import com.kamran.weatherforcast.core.Constants
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
+import okhttp3.internal.http2.Http2Reader.Companion.logger
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -28,7 +30,7 @@ class ApiClientProvider {
 
     fun createApiClient(): ApiService {
         val retrofit: Retrofit by lazy {
-            App.logger.warn("Creating Retrofit Client")
+            Log.e("API", "Creating Retrofit Client")
             val builder = Retrofit.Builder()
                 .baseUrl(Constants.baseUrl)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -36,7 +38,7 @@ class ApiClientProvider {
             val dispatcher = Dispatcher()
             dispatcher.maxRequests = 1
             val loggingInterceptor = HttpLoggingInterceptor()
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            // loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             val client: OkHttpClient = okHttpClient.newBuilder()
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
