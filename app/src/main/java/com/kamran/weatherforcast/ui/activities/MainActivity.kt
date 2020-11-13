@@ -2,6 +2,7 @@ package com.kamran.weatherforcast.ui.activities
 
 import android.annotation.SuppressLint
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,25 +15,32 @@ import com.kamran.weatherforcast.R
 import com.kamran.weatherforcast.data.api.State
 import com.kamran.weatherforcast.data.model.Current
 import com.kamran.weatherforcast.data.model.Daily
+import com.kamran.weatherforcast.data.model.Forecast
+import com.kamran.weatherforcast.data.model.Weather
 import com.kamran.weatherforcast.ui.viewmodels.HomeActivityViewModel
 import com.kamran.weatherforcast.utils.DateHelper
 import com.link184.kidadapter.setUp
 import com.link184.kidadapter.simple.SingleKidAdapter
-import com.soywiz.klock.*
+import com.soywiz.klock.DateFormat
+import com.soywiz.klock.DateTimeTz
+import com.soywiz.klock.days
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.daily_recyclerview_list_item.view.*
 import kotlinx.android.synthetic.main.hourly_recyclerview_list_item.view.*
 import kotlinx.android.synthetic.main.main_content.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Date
 import kotlin.math.roundToInt
 
+@SuppressLint("SetTextI18n")
 class MainActivity : AppCompatActivity() {
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
+
+    private var dayTime = "morning"
+    private val localTimestamp = DateTimeTz.nowLocal()
+    private val dateFormat =
+        DateFormat("EE dd MMM yyyy") // Construct a new DateFormat from a String
 
     private lateinit var hourlyAdapter: SingleKidAdapter<Current>
     private lateinit var dailyAdapter: SingleKidAdapter<Daily>
@@ -45,50 +53,43 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        today.text = localTimestamp.format(dateFormat)
+
         setUpScreen()
 
         setBackgroundColor()
 
         getCurrentWeatherForecast()
 
-
-        //   val yourmilliseconds = System.currentTimeMillis()
-        val yourmilliseconds = 1605250800L
-        val sdf = SimpleDateFormat("MMM dd,yyyy HH:mm")
-        sdf.timeZone = TimeZone.getTimeZone("UTC")
-        val resultdate = Date(yourmilliseconds)
-
     }
-
 
     @SuppressLint("SimpleDateFormat")
     private fun setBackgroundColor() {
         var drw = R.drawable.morning_bg
-        val local = DateTimeTz.nowLocal().hours
-        Log.e(
-            "NOW",
-            local.toString()
-        )
-
-        when (local) {
+        when (localTimestamp.hours) {
             in 0..6 -> {
                 drw = R.drawable.dawn_bg
+                dayTime = "dawn"
                 Log.e("NOW is", "dawn")
-            }//min
+            }//min dawn
             in 7..11 -> {
                 drw = R.drawable.morning_bg
+                dayTime = "morning"
                 Log.e("NOW is", "morning")
             }//morn
             in 12..16 -> {
                 drw = R.drawable.noon_bg
+                dayTime = "morning"
                 Log.e("NOW is", "noon")
-            }//max
+            }//max noon
             in 17..19 -> {
                 drw = R.drawable.evening_bg
+                dayTime = "evening"
                 Log.e("NOW is", "evening")
             }//eve
             in 20..23 -> {
                 drw = R.drawable.night_bg
+                dayTime = "night"
                 Log.e("NOW is", "night")
             }//night
         }
@@ -105,31 +106,17 @@ class MainActivity : AppCompatActivity() {
                     }
                     State.SUCCESS -> {
                         Log.e("NET", networkResource.toString())
+
                         loading_bar.visibility = View.GONE
                         main_content.visibility = View.VISIBLE
-                        city.text = networkResource.data?.timezone
-                        current_temp.text = "${
-                            networkResource.data?.current?.temp!!.toFloat().roundToInt()
-                        }°"
 
-                        weather_icon.setImageDrawable(
-                            ContextCompat.getDrawable(
-                                applicationContext,
-                                resources.getIdentifier(
-                                    networkResource.data.current.weather.first().description.replace(
-                                        " ",
-                                        "_"
-                                    ),
-                                    "drawable",
-                                    applicationContext?.packageName
-                                )
-                            )
-                        )
+                        val responseData = networkResource.data
+                        setCurrentWeatherData(responseData!!)
 
-                        hours = networkResource.data.hourly.take(6).toMutableList()
+                        hours = responseData.hourly.drop(1).take(12).toMutableList()
                         feedHours()
 
-                        days = networkResource.data.daily.take(7).toMutableList()
+                        days = responseData.daily.take(7).toMutableList()
                         feedDays()
                     }
                     State.ERROR -> {
@@ -139,9 +126,14 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
-    @SuppressLint("SetTextI18n")
+    private fun setCurrentWeatherData(data: Forecast) {
+        city_text.text = data.timezone
+        current_temp.text = getString(R.string.temp, data.current.temp.toFloat().roundToInt())
+        weather_icon.setImageDrawable(setWeatherIcons(data.current.weather))
+    }
+
+    @SuppressLint("StringFormatMatches")
     private fun feedHours() {
-        val dateFormat: DateFormat = DateFormat("HH:mm:ss")
         hourlyAdapter = hourly_recyclerview.setUp<Current> {
             withLayoutManager(
                 LinearLayoutManager(
@@ -152,28 +144,12 @@ class MainActivity : AppCompatActivity() {
             )
             withLayoutResId(R.layout.hourly_recyclerview_list_item)
             withItems(hours)
-            bindIndexed { hour, position ->
-                //Log.e("DateTimeTz.now unix", DateTime.nowUnix().toLong().toString())
-                Log.e("now unix", System.currentTimeMillis().toString())
-                Log.e("unix", hour.dt.toString())
-
-                Log.e("desc", hour.weather.first().description.replace(" ", "_"))
-                hourly_temp.text = "${
-                    hour.temp.toFloat().roundToInt()
-                }°"
+            bindIndexed { hour, _ ->
+                hourly_temp.text = getString(R.string.temp, hour.temp.toFloat().roundToInt())
                 hourly_time.text = DateHelper.convertLongToTime(hour.dt.toLong())
-
+                    .toLowerCase(Locale.getDefault())
                 try {
-                    hourly_icon.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            applicationContext,
-                            resources.getIdentifier(
-                                hour.weather.first().description.replace(" ", "_"),
-                                "drawable",
-                                context?.packageName
-                            )
-                        )
-                    )
+                    hourly_icon.setImageDrawable(setWeatherIcons(hour.weather))
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -181,33 +157,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("StringFormatMatches")
     private fun feedDays() {
         val today = DateTimeTz.nowLocal()
         dailyAdapter = daily_recyclerview.setUp<Daily> {
             withLayoutResId(R.layout.daily_recyclerview_list_item)
             withItems(days)
             bindIndexed { day, position ->
-                if (position == 0) day_title.text = "Tomorrow"
+                if (position == 0) day_title.text = getString(R.string.tomorrow)
                 else day_title.text =
                     (today + (position + 1).days).dayOfWeek.toString()
-                day_temp.text = "${
-                    day.temp.max.toFloat().roundToInt()
-                }° / ${
+                day_temp.text = getString(
+                    R.string.temp_max_min,
+                    day.temp.max.toFloat().roundToInt(),
                     day.temp.min.toFloat().roundToInt()
-                }°"
-
+                )
                 try {
-                    day_weather_icon.setImageDrawable(
-                        ContextCompat.getDrawable(
-                            applicationContext,
-                            resources.getIdentifier(
-                                day.weather.first().description.replace(" ", "_"),
-                                "drawable",
-                                context?.packageName
-                            )
-                        )
-                    )
+                    day_weather_icon.setImageDrawable(setWeatherIcons(day.weather))
                 } catch (e: Exception) {
                     //e.printStackTrace()
                 }
@@ -236,4 +202,19 @@ class MainActivity : AppCompatActivity() {
         }
         win.attributes = winParams
     }
+
+    private fun setWeatherIcons(weather: List<Weather>): Drawable? {
+        return ContextCompat.getDrawable(
+            applicationContext,
+            resources.getIdentifier(
+                weather.first().description.replace(
+                    " ",
+                    "_"
+                ),
+                "drawable",
+                applicationContext?.packageName
+            )
+        )
+    }
+
 }

@@ -7,6 +7,7 @@
 
 package com.kamran.weatherforcast.utils
 
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,9 +18,14 @@ import java.util.*
 class DateHelper {
     companion object {
         fun convertLongToTime(time: Long): String {
-            val date = Date(time)
+            val date = Date(time * 1000)
             val format = SimpleDateFormat("ha")
-            //format.timeZone = TimeZone.getTimeZone("UTC")
+            return format.format(date)
+        }
+
+        fun returnHourFromTime(time: Long): String {
+            val date = Date(time * 1000)
+            val format = SimpleDateFormat("H")
             return format.format(date)
         }
 
