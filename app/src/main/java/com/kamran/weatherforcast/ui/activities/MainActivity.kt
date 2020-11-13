@@ -1,8 +1,13 @@
 package com.kamran.weatherforcast.ui.activities
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,10 +22,12 @@ import com.kamran.weatherforcast.data.model.Current
 import com.kamran.weatherforcast.data.model.Daily
 import com.kamran.weatherforcast.data.model.Forecast
 import com.kamran.weatherforcast.data.model.Weather
+import com.kamran.weatherforcast.ui.base.BaseActivity
 import com.kamran.weatherforcast.ui.viewmodels.HomeActivityViewModel
 import com.kamran.weatherforcast.utils.DateHelper
 import com.link184.kidadapter.setUp
 import com.link184.kidadapter.simple.SingleKidAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.days
@@ -36,6 +43,7 @@ import kotlin.math.roundToInt
 class MainActivity : AppCompatActivity() {
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
+    var isNetworkAvailable: Boolean = true
 
     private var dayTime = "morning"
     private val localTimestamp = DateTimeTz.nowLocal()
@@ -48,6 +56,12 @@ class MainActivity : AppCompatActivity() {
     private var hours = mutableListOf<Current>()
     private var days = mutableListOf<Daily>()
 
+    private val citiesData = mapOf(
+        0 to "51.421509,35.694389",
+        1 to "52.538799,29.6036",
+        2 to "46.291901,38.080002"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_WeatherForcast)
         super.onCreate(savedInstanceState)
@@ -59,8 +73,31 @@ class MainActivity : AppCompatActivity() {
 
         setBackgroundColor()
 
-        getCurrentWeatherForecast()
+        setupCitiesSpinner()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+    }
+
+    private fun setupCitiesSpinner() {
+        cities.hint = "Tehran"
+        cities.apply {
+            setItems(
+                arrayListOf(
+                    "Tehran",
+                    "Shiraz",
+                    "Tabriz"
+                )
+            )
+            setOnSpinnerItemSelectedListener<String> { index, _ ->
+                getCurrentWeatherForecast(
+                    citiesData[index]?.split(",")?.first(),
+                    citiesData[index]?.split(",")?.get(1)
+                )
+            }
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -97,12 +134,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getCurrentWeatherForecast() {
-        homeActivityViewModel.getWeatherForecast("51.421509", "35.694389")
+    private fun getCurrentWeatherForecast(lot: String?, lat: String?) {
+        homeActivityViewModel.getWeatherForecast(lot!!, lat!!)
             .observe(this, { networkResource ->
                 when (networkResource.state) {
                     State.LOADING -> {
                         Log.e("NET", "loading")
+                        loading_bar.visibility = View.VISIBLE
+                        main_content.visibility = View.GONE
                     }
                     State.SUCCESS -> {
                         Log.e("NET", networkResource.toString())
@@ -151,7 +190,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     hourly_icon.setImageDrawable(setWeatherIcons(hour.weather))
                 } catch (e: Exception) {
-                    e.printStackTrace()
+                    //e.printStackTrace()
                 }
             }
         }
@@ -215,6 +254,44 @@ class MainActivity : AppCompatActivity() {
                 applicationContext?.packageName
             )
         )
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerReceiver(broadcastReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+        if (isNetworkAvailable)
+            getCurrentWeatherForecast(
+                citiesData[0]?.split(",")?.first(),
+                citiesData[0]?.split(",")?.get(1)
+            )
+    }
+
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(broadcastReceiver)
+    }
+
+    private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val notConnected = intent.getBooleanExtra(
+                ConnectivityManager
+                    .EXTRA_NO_CONNECTIVITY, false
+            )
+            if (notConnected) {
+                onNetDisConnected()
+            } else {
+                onNetConnected()
+            }
+        }
+    }
+
+    fun onNetConnected() {
+        isNetworkAvailable = true
+    }
+
+    fun onNetDisConnected() {
+        isNetworkAvailable = false
     }
 
 }

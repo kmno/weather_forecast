@@ -8,19 +8,12 @@
 package com.kamran.weatherforcast.ui.viewmodels
 
 import android.content.Context
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.kamran.weatherforcast.R
 import com.kamran.weatherforcast.core.Constants
 import com.kamran.weatherforcast.data.api.ApiClientProvider
 import com.kamran.weatherforcast.data.api.Resource
-import com.kamran.weatherforcast.data.model.Category
-import com.kamran.weatherforcast.data.repository.DbRepository
-import com.kamran.weatherforcast.ui.activities.HomeActivity
-import com.kamran.weatherforcast.utils.ConfigPref
-import com.kamran.weatherforcast.utils.ShowCase
-import com.kamran.weatherforcast.utils.UserInfo
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -30,7 +23,6 @@ import kotlinx.coroutines.Dispatchers
 class HomeActivityViewModel(
     private val context: Context,
     apiProvider: ApiClientProvider
-    //  private val dbRepository: DbRepository
 ) :
     ViewModel() {
 

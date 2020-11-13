@@ -31,4 +31,5 @@
     <!-- text resource -->
     <color name="primaryTextColor">#FFFFFF</color>
     <color name="secondaryTextColor">#99FFFFFF</color>
+    <color name="spinner_bg_color">#37FFFFFF</color>
 </resources>

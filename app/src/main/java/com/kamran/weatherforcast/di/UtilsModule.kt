@@ -7,7 +7,6 @@
 package com.kamran.weatherforcast.di
 
 import coil.ImageLoader
-import com.kamran.weatherforcast.data.repository.DbRepository
 import com.kamran.weatherforcast.utils.NetworkInfo
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -20,5 +19,4 @@ import org.koin.dsl.module
 val utilsModule = module {
     single { NetworkInfo(androidContext()) }
     single { ImageLoader(androidContext()) }
-    // single { DbRepository(androidContext(), androidApplication(), get(), get()) }
 }
