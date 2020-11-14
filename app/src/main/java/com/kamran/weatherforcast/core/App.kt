@@ -1,15 +1,8 @@
 package com.kamran.weatherforcast.core
 
 import android.app.Application
-import coil.Coil
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.request.CachePolicy
-import coil.util.CoilUtils
 import com.kamran.weatherforcast.di.apiModule
-import com.kamran.weatherforcast.di.utilsModule
 import com.kamran.weatherforcast.di.viewModelModule
-import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -29,7 +22,6 @@ class App : Application() {
             androidContext(this@App)
             modules(
                 viewModelModule,
-                utilsModule,
                 apiModule
             )
         }

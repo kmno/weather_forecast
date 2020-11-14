@@ -20,9 +20,6 @@ import com.kamran.weatherforcast.utils.Alerts
 import com.kamran.weatherforcast.utils.DateHelper
 import com.link184.kidadapter.setUp
 import com.link184.kidadapter.simple.SingleKidAdapter
-import com.muddassir.connection_checker.ConnectionChecker
-import com.muddassir.connection_checker.ConnectionState
-import com.muddassir.connection_checker.ConnectivityListener
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.days
@@ -35,6 +32,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
+@Suppress("DEPRECATION")
 @SuppressLint("SetTextI18n")
 class HomeActivity : AppCompatActivity() {
 
