@@ -6,10 +6,13 @@
  */
 package com.kamran.weatherforcast.data.api
 
+import androidx.annotation.Keep
+
 /**
  * Created by Kamran Noorinejad on 5/19/2020 AD 12:23.
  * Edited by Kamran Noorinejad on 5/19/2020 AD 12:23.
  */
+@Keep
 data class Resource<out T>(
     val state: State,
     val cod: Int?,

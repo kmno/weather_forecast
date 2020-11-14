@@ -16,6 +16,5 @@ import org.koin.dsl.module
  * Edited by Kamran Noorinejad on 5/19/2020 AD 13:12.
  */
 val viewModelModule = module {
-    //viewModel { SplashActivityViewModel(androidContext(), get()) }
-    viewModel { HomeActivityViewModel(androidContext(), get()/*, get()*/) }
+    viewModel { HomeActivityViewModel(androidContext(), get()) }
 }

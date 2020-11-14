@@ -20,12 +20,20 @@ android {
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    signingConfigs {
+        release {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled true
-            shrinkResources true
-            debuggable false
+            minifyEnabled false
+            shrinkResources false
+            debuggable true
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard-rules.pro'
         }

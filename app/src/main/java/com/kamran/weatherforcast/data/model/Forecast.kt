@@ -1,7 +1,9 @@
 package com.kamran.weatherforcast.data.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class Forecast(
     @SerializedName("cod")
     var cod: Int,

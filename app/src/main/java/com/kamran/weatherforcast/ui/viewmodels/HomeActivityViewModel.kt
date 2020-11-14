@@ -15,6 +15,7 @@ import com.kamran.weatherforcast.core.Constants
 import com.kamran.weatherforcast.data.api.ApiClientProvider
 import com.kamran.weatherforcast.data.api.Resource
 import kotlinx.coroutines.Dispatchers
+import kotlin.math.roundToInt
 
 /**
  * Created by Kamran Noorinejad on 5/17/2020 AD 10:48.

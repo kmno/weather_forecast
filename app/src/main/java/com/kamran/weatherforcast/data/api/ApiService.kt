@@ -6,6 +6,7 @@
  */
 package com.kamran.weatherforcast.data.api
 
+import androidx.annotation.Keep
 import com.kamran.weatherforcast.data.model.Current
 import com.kamran.weatherforcast.data.model.Forecast
 import retrofit2.Response
@@ -16,6 +17,7 @@ import retrofit2.http.Query
  * Created by Kamran Noorinejad on 5/19/2020 AD 12:11.
  * Edited by Kamran Noorinejad on 5/19/2020 AD 12:11.
  */
+@Keep
 interface ApiService {
     //One call
     @GET("/data/2.5/onecall")

@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,10 +23,10 @@ import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.days
 import com.xoxoer.lifemarklibrary.Lifemark
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.daily_recyclerview_list_item.view.*
 import kotlinx.android.synthetic.main.hourly_recyclerview_list_item.view.*
-import kotlinx.android.synthetic.main.main_content.*
+import kotlinx.android.synthetic.main.home_content.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
@@ -58,7 +57,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_WeatherForcast)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home)
 
         today.text = localTimestamp.format(dateFormat)
 
@@ -111,27 +110,22 @@ class HomeActivity : AppCompatActivity() {
             in 0..6 -> {
                 drw = R.drawable.dawn_bg
                 dayTime = "dawn"
-                Log.e("NOW is", "dawn")
             }//min dawn
             in 7..11 -> {
                 drw = R.drawable.morning_bg
                 dayTime = "morning"
-                Log.e("NOW is", "morning")
             }//morn
             in 12..16 -> {
                 drw = R.drawable.noon_bg
                 dayTime = "morning"
-                Log.e("NOW is", "noon")
             }//max noon
             in 17..19 -> {
                 drw = R.drawable.evening_bg
                 dayTime = "evening"
-                Log.e("NOW is", "evening")
             }//eve
             in 20..23 -> {
                 drw = R.drawable.night_bg
                 dayTime = "night"
-                Log.e("NOW is", "night")
             }//night
         }
         window.decorView.background = ContextCompat.getDrawable(this, drw)
@@ -144,11 +138,11 @@ class HomeActivity : AppCompatActivity() {
                 when (networkResource.state) {
                     State.LOADING -> {
                         loading_bar.visibility = View.VISIBLE
-                        main_content.visibility = View.GONE
+                        home_content.visibility = View.GONE
                     }
                     State.SUCCESS -> {
                         loading_bar.visibility = View.GONE
-                        main_content.visibility = View.VISIBLE
+                        home_content.visibility = View.VISIBLE
 
                         val responseData = networkResource.data
                         setCurrentWeatherData(responseData!!)
@@ -172,7 +166,20 @@ class HomeActivity : AppCompatActivity() {
     private fun setCurrentWeatherData(data: Forecast) {
         city_text.text = data.timezone
         current_temp.text = getString(R.string.temp, setTemps(data.current.temp))
-        weather_icon.setImageDrawable(setWeatherIcons(data.current.weather))
+        setWeatherIconBasedOnDayTime(data.current.weather)
+    }
+
+    private fun setWeatherIconBasedOnDayTime(weather: List<Weather>) {
+        when(weather.first().description){
+            "clear sky" -> {
+                weather_icon.setImageDrawable(setWeatherIcons(weather, "_$dayTime"))
+            }
+            "few clouds" -> {
+                weather_icon.setImageDrawable(setWeatherIcons(weather, "_$dayTime"))
+            }
+            else -> weather_icon.setImageDrawable(setWeatherIcons(weather))
+        }
+
     }
 
     @SuppressLint("StringFormatMatches")
@@ -246,14 +253,14 @@ class HomeActivity : AppCompatActivity() {
         win.attributes = winParams
     }
 
-    private fun setWeatherIcons(weather: List<Weather>): Drawable? {
+    private fun setWeatherIcons(weather: List<Weather>, dayTime:String = ""): Drawable? {
         return ContextCompat.getDrawable(
             applicationContext,
             resources.getIdentifier(
                 weather.first().description.replace(
                     " ",
                     "_"
-                ),
+                )+dayTime,
                 "drawable",
                 applicationContext?.packageName
             )
@@ -263,5 +270,4 @@ class HomeActivity : AppCompatActivity() {
     private fun setTemps(temp: String): Int {
         return temp.toFloat().roundToInt()
     }
-
 }
