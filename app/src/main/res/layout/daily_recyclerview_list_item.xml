@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:paddingEnd="20dp"
@@ -10,7 +11,6 @@
         android:id="@+id/day_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/primaryTextColor"
@@ -25,18 +25,18 @@
         android:layout_marginTop="5dp"
         android:scaleType="centerInside"
         app:srcCompat="@drawable/clear_sky_morning"
-        android:layout_toLeftOf="@id/day_temp" />
+        android:layout_toStartOf="@id/day_temp" />
 
     <TextView
         android:id="@+id/day_temp"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:gravity="right|center"
         android:textColor="@color/primaryTextColor"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        tools:ignore="RtlHardcoded" />
 </RelativeLayout>

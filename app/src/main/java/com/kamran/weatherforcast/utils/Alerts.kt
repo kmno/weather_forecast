@@ -12,7 +12,6 @@ import com.irozon.alertview.AlertActionStyle
 import com.irozon.alertview.AlertStyle
 import com.irozon.alertview.AlertView
 import com.irozon.alertview.objects.AlertAction
-import com.kamran.weatherforcast.core.App
 
 /**
  * Created by Kamran Noorinejad on 5/27/2020 AD 11:26.
@@ -20,7 +19,7 @@ import com.kamran.weatherforcast.core.App
  */
 object Alerts {
 
-    var alert: AlertView? = null
+    private var alert: AlertView? = null
 
     private const val default_message = "Are You Sure?"
     private const val default_positive_button_text = "Yes"

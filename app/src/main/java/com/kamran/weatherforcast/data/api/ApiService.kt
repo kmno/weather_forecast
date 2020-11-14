@@ -7,7 +7,6 @@
 package com.kamran.weatherforcast.data.api
 
 import androidx.annotation.Keep
-import com.kamran.weatherforcast.data.model.Current
 import com.kamran.weatherforcast.data.model.Forecast
 import retrofit2.Response
 import retrofit2.http.GET

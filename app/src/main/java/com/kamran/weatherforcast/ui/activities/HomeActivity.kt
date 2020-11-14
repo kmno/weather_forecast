@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kamran.weatherforcast.R
 import com.kamran.weatherforcast.data.api.State
-import com.kamran.weatherforcast.data.model.*
+import com.kamran.weatherforcast.data.model.Current
+import com.kamran.weatherforcast.data.model.Daily
+import com.kamran.weatherforcast.data.model.Forecast
+import com.kamran.weatherforcast.data.model.Weather
 import com.kamran.weatherforcast.ui.viewmodels.HomeActivityViewModel
 import com.kamran.weatherforcast.utils.Alerts
 import com.kamran.weatherforcast.utils.DateHelper
@@ -25,8 +27,8 @@ import com.soywiz.klock.days
 import com.xoxoer.lifemarklibrary.Lifemark
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.daily_recyclerview_list_item.view.*
-import kotlinx.android.synthetic.main.hourly_recyclerview_list_item.view.*
 import kotlinx.android.synthetic.main.home_content.*
+import kotlinx.android.synthetic.main.hourly_recyclerview_list_item.view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt

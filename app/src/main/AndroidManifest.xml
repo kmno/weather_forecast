@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.WeatherForcast.Launcher">
+        android:theme="@style/Theme.WeatherForcast.Launcher"
+        android:fullBackupContent="@xml/backup_descriptor">
         <!--android:theme="@style/Theme.WeatherForcast"-->
         <activity
             android:name=".ui.activities.HomeActivity"

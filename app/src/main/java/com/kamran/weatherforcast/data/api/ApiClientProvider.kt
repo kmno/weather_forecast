@@ -9,11 +9,9 @@ package com.kamran.weatherforcast.data.api
 
 import android.util.Log
 import com.google.gson.GsonBuilder
-import com.kamran.weatherforcast.core.App
 import com.kamran.weatherforcast.core.Constants
 import okhttp3.Dispatcher
 import okhttp3.OkHttpClient
-import okhttp3.internal.http2.Http2Reader.Companion.logger
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

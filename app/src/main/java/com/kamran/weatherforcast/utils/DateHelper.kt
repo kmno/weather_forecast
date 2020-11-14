@@ -7,6 +7,7 @@
 
 package com.kamran.weatherforcast.utils
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +17,7 @@ import java.util.*
  */
 object DateHelper {
 
+    @SuppressLint("SimpleDateFormat")
     fun convertLongToTime(time: Long): String {
         val date = Date(time * 1000)
         val format = SimpleDateFormat("ha")
