@@ -26,6 +26,7 @@ import com.muddassir.connection_checker.ConnectivityListener
 import com.soywiz.klock.DateFormat
 import com.soywiz.klock.DateTimeTz
 import com.soywiz.klock.days
+import com.xoxoer.lifemarklibrary.Lifemark
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.daily_recyclerview_list_item.view.*
 import kotlinx.android.synthetic.main.hourly_recyclerview_list_item.view.*
@@ -35,7 +36,7 @@ import java.util.*
 import kotlin.math.roundToInt
 
 @SuppressLint("SetTextI18n")
-class HomeActivity : AppCompatActivity(), ConnectivityListener {
+class HomeActivity : AppCompatActivity() {
 
     private val homeActivityViewModel: HomeActivityViewModel by viewModel()
 
@@ -50,8 +51,6 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
     private var hours = mutableListOf<Current>()
     private var days = mutableListOf<Daily>()
 
-    val connectionChecker = ConnectionChecker(this, lifecycle)
-
     private val citiesData = mapOf(
         0 to "51.421509,35.694389",
         1 to "52.538799,29.6036",
@@ -63,8 +62,6 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        connectionChecker.connectivityListener = this
-
         today.text = localTimestamp.format(dateFormat)
 
         setUpScreen()
@@ -73,26 +70,21 @@ class HomeActivity : AppCompatActivity(), ConnectivityListener {
 
         setupCitiesSpinner()
 
-    }
-
-    override fun onConnectionState(state: ConnectionState) {
-        when (state) {
-            ConnectionState.CONNECTED -> {
-                getCurrentWeatherForecast(
-                    citiesData[0]?.split(",")?.first(),
-                    citiesData[0]?.split(",")?.get(1)
-                )
-            }
-            ConnectionState.SLOW -> {
-                Toast.makeText(this, R.string.slow_connection, Toast.LENGTH_LONG).show()
-            }
-            else -> {
-                Alerts.showAlertDialogWithDefaultButton(
-                    "Oops!",
-                    getString(R.string.no_connection), "OK", this
-                )
-            }
-        }
+        val networkConnection = Lifemark(applicationContext)
+        networkConnection.ObservableNetworkCondition()
+            .observe(this@HomeActivity, { isConnected ->
+                if (isConnected) {
+                    getCurrentWeatherForecast(
+                        citiesData[0]?.split(",")?.first(),
+                        citiesData[0]?.split(",")?.get(1)
+                    )
+                } else {
+                    Alerts.showAlertDialogWithDefaultButton(
+                        "Oops!",
+                        getString(R.string.no_connection), "OK", this
+                    )
+                }
+            })
     }
 
     private fun setupCitiesSpinner() {
